@@ -1,35 +1,35 @@
 pipeline {
-
     agent any
 
+    environment {
+        JAVA_HOME = '/usr/lib/jvm/java-11-openjdk'
+        PATH = "$JAVA_HOME/bin:$PATH"
+    }
+
     stages {
-
-        stage('Clone Repository') {
+        stage('Checkout Code') {
             steps {
-                echo 'Cloning repository...'
-                git 'https://github.com/KyathamRohith/working.git'
+                git 'https://github.com/yourusername/yourrepository.git'
             }
         }
 
-        stage('Build') {
+        stage('Build and Run') {
             steps {
-                echo 'Starting the build process...'
-                sh 'echo "Building the application..."'
+                script {
+                    // Compile the Java code
+                    sh 'javac Palindrome.java'
+                    
+                    // Run the Java program
+                    sh 'java Palindrome'
+                }
             }
         }
+    }
 
-        stage('Test') {
-            steps {
-                echo 'Executing tests...'
-                sh 'echo "Running tests..."'
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                echo 'Deploying the application...'
-                sh 'echo "Deploying application..."'
-            }
+    post {
+        always {
+            echo 'Cleaning up the workspace'
+            cleanWs()
         }
     }
 }
