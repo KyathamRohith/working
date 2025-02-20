@@ -7,12 +7,6 @@ pipeline {
     }
 
     stages {
-        stage('Checkout Code') {
-            steps {
-                git 'https://github.com/KyathamRohith/jenkins.git'
-            }
-        }
-
         stage('Build and Run') {
             steps {
                 script {
